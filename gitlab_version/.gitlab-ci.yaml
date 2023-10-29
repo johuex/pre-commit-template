@@ -1,0 +1,14 @@
+default:
+  image:
+    name: "$CI_REGISTRY_IMAGE/pre-commit-image:latest"
+
+stages:
+  - linters
+
+pre_commit_job:
+  stage: linters
+  script:
+    - pre-commit run --all-files
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
